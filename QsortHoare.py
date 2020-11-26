@@ -1,6 +1,8 @@
 import sys
+import numpy as np
+import random
 
-sys.setrecursionlimit(1000000)
+sys.setrecursionlimit(1000000000)
 
 def partition(arr, low, high):
     pivot = arr[low]
@@ -39,17 +41,17 @@ def quickSort(arr, low, high):
 #             quickSort(arr, pi + 1, high)
 #             high = pi - 1
 
-# def createArrayDesc(elements):
-#     arr_desc = np.array([0 for _ in range(elements)])
-#     for i in range(elements):
-#         arr_desc[i] = elements - i
-#     return arr_desc
-#
-# def createArray(elements, rangefrom, rangeto):
-#     return np.array([random.randint(rangefrom, rangeto) for _ in range(elements)])
+def createArrayDesc(elements):
+    arr_desc = np.array([0 for _ in range(elements)])
+    for i in range(elements):
+        arr_desc[i] = elements - i
+    return arr_desc
+
+def createArray(elements, rangefrom, rangeto):
+    return np.array([random.randint(rangefrom, rangeto) for _ in range(elements)])
 
 
-# size = 3000
+# size = 7000
 # array = createArrayDesc(size)
 # array2 = createArray(50000, 0, 1000)
 # array3 = np.concatenate((array, array2))
