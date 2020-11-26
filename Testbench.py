@@ -15,10 +15,11 @@ def createArray(elements, rangefrom, rangeto):
     return np.array([random.randint(rangefrom, rangeto) for _ in range(elements)])
 
 
-# Dictionary with times of sorting algorithms
-times = {'quickSort': [],
-         'heapSort': [],
-         'radixSort': []}
+def createArrayDesc(elements):
+    arr_desc = np.array([0 for _ in range(elements)])
+    for i in range(elements):
+        arr_desc[i] = elements - i
+    return arr_desc
 
 
 def sort(algorithm, sizeOfArray, arr_):
@@ -30,12 +31,44 @@ def sort(algorithm, sizeOfArray, arr_):
         quickSort(arr_, 0, sizeOfArray - 1)
 
 
-def rad(algo, array):
-    if algo == Algos.radixSort:
-        return radix(array, __get_num_digits(array))
+# Dictionary with times of elements
+# times = {'quickSort': {
+#             'range': [],
+#             'elements': []},
+#          'heapSort': {
+#               'range': [],
+#               'elements': []},
+#          'radixSort': {
+#              'range': [],
+#              'elements': []}}
 
 
-samples = [100000, 1000000]
+ranges = [100, 1000, 10000, 100000, 1000000]
+samples = [50000, 100000, 500000, 1000000, 50000000]
+
+times = {
+    Algos.quickSort.name: {
+        ranges[0]: [],
+        ranges[1]: [],
+        ranges[2]: [],
+        ranges[3]: [],
+        ranges[4]: []
+    },
+    Algos.heapSort.name: {
+            ranges[0]: [],
+            ranges[1]: [],
+            ranges[2]: [],
+            ranges[3]: [],
+            ranges[4]: []
+     },
+    Algos.radixSort.name: {
+            ranges[0]: [],
+            ranges[1]: [],
+            ranges[2]: [],
+            ranges[3]: [],
+            ranges[4]: []
+        }
+}
 
 
 for i in range(len(samples)):
@@ -53,3 +86,26 @@ for i in range(len(samples)):
         tot_time = t1 - t0
         times[str(algo.name)].append(tot_time)
         print("{}: {}".format(str(algo.name), times[str(algo.name)][i]))
+
+# for i in range(len(samples)):
+#     arr = createArrayDesc(samples[i])
+#     print("{} :".format(samples[i]))
+#     for algo in Algos:
+#         arr_copy = arr.copy()
+#         t0 = time.time()
+#         if algo != Algos.radixSort:
+#             sort(algo, samples[i], arr_copy)
+#         else:
+#             arr_copy = radix(arr_copy, __get_num_digits(arr_copy))
+#        # print("sorted by: {}  : {}".format(algo.name, arr_copy[3:-3]))
+#         t1 = time.time()
+#         tot_time = t1 - t0
+#         times[str(algo.name)].append(tot_time)
+#         print("DESC {}: {}".format(str(algo.name), times[str(algo.name)][i]))
+
+
+# array = createArray(1000, 0, 1000)
+# array2 = np.array([0 for _ in range(100000)])
+# print(array2)
+# quickSort(array2, 0, 100000 - 1)
+# print(array2)
