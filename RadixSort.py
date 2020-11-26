@@ -1,7 +1,4 @@
 from functools import reduce
-import time
-import numpy as np
-import random
 
 
 def __get_num_digits(A):
@@ -24,20 +21,3 @@ def radix(A, num_of_digits):
         A = __flatten(bucket)
     return A
 
-
-# def main():
-#     A = [random.randrange(0, 10000) for _ in range(10000)]
-#     B = A.copy()
-#     #print(A)
-#     num_of_digits = __get_num_digits(A)
-#     t0 = time.time()
-#     B = radix(B, __get_num_digits(B))
-#     t1 = time.time()
-#     #print(A)
-#     tot_time = t1 - t0
-#     print(B[:5], B[-5:])
-#     print(tot_time)
-
-
-#
-#main()
