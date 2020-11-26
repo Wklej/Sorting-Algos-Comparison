@@ -44,7 +44,8 @@ def sort(algorithm, sizeOfArray, arr_):
 
 
 ranges = [100, 1000, 10000, 100000, 1000000]
-samples = [50000, 100000, 500000, 1000000, 50000000]
+#samples = [50000, 100000, 500000, 1000000, 50000000]
+samples = [10, 100, 1000, 10000]
 
 times = {
     Algos.quickSort.name: {
@@ -71,21 +72,24 @@ times = {
 }
 
 
-for i in range(len(samples)):
-    arr = createArray(samples[i], 0, 1000)
-    print("{} :".format(samples[i]))
-    for algo in Algos:
-        arr_copy = arr.copy()
-        t0 = time.time()
-        if algo != Algos.radixSort:
-            sort(algo, samples[i], arr_copy)
-        else:
-            arr_copy = radix(arr_copy, __get_num_digits(arr_copy))
-       # print("sorted by: {}  : {}".format(algo.name, arr_copy[3:-3]))
-        t1 = time.time()
-        tot_time = t1 - t0
-        times[str(algo.name)].append(tot_time)
-        print("{}: {}".format(str(algo.name), times[str(algo.name)][i]))
+for range_ in range(len(ranges)):
+    for sample_ in range(len(samples)):
+        arr = createArray(samples[sample_], 0, ranges[range_])
+       # print("{} :".format(samples[sample_]))
+        for algo in Algos:
+            arr_copy = arr.copy()
+            t0 = time.time()
+            if algo != Algos.radixSort:
+                sort(algo, samples[sample_], arr_copy)
+            else:
+                arr_copy = radix(arr_copy, __get_num_digits(arr_copy))
+           # print("sorted by: {}  : {}".format(algo.name, arr_copy[3:-3]))
+            t1 = time.time()
+            tot_time = t1 - t0
+            times[algo.name][ranges[range_]].append(tot_time)
+            #print("{}: {}".format(str(algo.name), times[str(algo.name)][sample_]))
+
+print(times)
 
 # for i in range(len(samples)):
 #     arr = createArrayDesc(samples[i])
