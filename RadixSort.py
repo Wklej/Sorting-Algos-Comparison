@@ -25,15 +25,19 @@ def radix(A, num_of_digits):
     return A
 
 
-def main():
-    A = [random.randrange(0, 1000000) for _ in range(1000000)]
-    num_of_digits = __get_num_digits(A)
-    t0 = time.time()
-    A = radix(A, num_of_digits)
-    t1 = time.time()
-    tot_time = t1 - t0
-    print(A[:6], A[-6:])
-    print(tot_time)
+# def main():
+#     A = [random.randrange(0, 10000) for _ in range(10000)]
+#     B = A.copy()
+#     #print(A)
+#     num_of_digits = __get_num_digits(A)
+#     t0 = time.time()
+#     B = radix(B, __get_num_digits(B))
+#     t1 = time.time()
+#     #print(A)
+#     tot_time = t1 - t0
+#     print(B[:5], B[-5:])
+#     print(tot_time)
 
 
-# main()
+#
+#main()
