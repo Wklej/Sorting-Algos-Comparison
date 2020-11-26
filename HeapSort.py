@@ -1,6 +1,3 @@
-from random import random, randrange
-
-
 def heapify(arr, size, index):
     largest = index
     left = 2 * index + 1
@@ -26,9 +23,3 @@ def heapSort(arr):
     for i in range(size - 1, 0, -1):
         arr[i], arr[0] = arr[0], arr[i]
         heapify(arr, i, 0)
-
-
-# array = [randrange(10000) for _ in range(1000)]
-# print(array)
-# heapSort(array)
-# print(array)
