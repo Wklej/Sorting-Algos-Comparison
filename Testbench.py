@@ -10,17 +10,14 @@ import time
 class Algos(Enum):
     heapSort, quickSort, radixSort = range(3)
 
-
 def createArray(elements, rangefrom, rangeto):
     return np.array([random.randint(rangefrom, rangeto) for _ in range(elements)])
-
 
 def createArrayDesc(elements):
     arr_desc = np.array([0 for _ in range(elements)])
     for i in range(elements):
         arr_desc[i] = elements - i
     return arr_desc
-
 
 def sort(algorithm, sizeOfArray, arr_):
     if algorithm == Algos.heapSort:
@@ -30,22 +27,19 @@ def sort(algorithm, sizeOfArray, arr_):
     elif algorithm == Algos.quickSort:
         quickSort(arr_, 0, sizeOfArray - 1)
 
-
-# Dictionary with times of elements
-# times = {'quickSort': {
-#             'range': [],
-#             'elements': []},
-#          'heapSort': {
-#               'range': [],
-#               'elements': []},
-#          'radixSort': {
-#              'range': [],
-#              'elements': []}}
+def save_file(name, times_):
+    with open("{}.csv".format(name), 'w') as f:
+        for i in times_: #3 times
+            f.write("\n{}".format(i))
+            for j in times_[i].values(): # 5 times
+                f.write("\n")
+                for x in j:
+                    f.write("{};".format(x))
 
 
 ranges = [100, 1000, 10000, 100000, 1000000]
 #samples = [50000, 100000, 500000, 1000000, 50000000]
-samples = [10, 100, 1000, 10000]
+samples = [50, 100]
 
 times = {
     Algos.quickSort.name: {
@@ -71,45 +65,115 @@ times = {
         }
 }
 
+timesHR = {
+    Algos.quickSort.name: {
+        ranges[0]: [],
+        ranges[1]: [],
+        ranges[2]: [],
+        ranges[3]: [],
+        ranges[4]: []
+    },
+    Algos.heapSort.name: {
+            ranges[0]: [],
+            ranges[1]: [],
+            ranges[2]: [],
+            ranges[3]: [],
+            ranges[4]: []
+     },
+    Algos.radixSort.name: {
+            ranges[0]: [],
+            ranges[1]: [],
+            ranges[2]: [],
+            ranges[3]: [],
+            ranges[4]: []
+        }
+}
 
+times4R = {
+    Algos.quickSort.name: {
+        ranges[0]: [],
+        ranges[1]: [],
+        ranges[2]: [],
+        ranges[3]: [],
+        ranges[4]: []
+    },
+    Algos.heapSort.name: {
+            ranges[0]: [],
+            ranges[1]: [],
+            ranges[2]: [],
+            ranges[3]: [],
+            ranges[4]: []
+     },
+    Algos.radixSort.name: {
+            ranges[0]: [],
+            ranges[1]: [],
+            ranges[2]: [],
+            ranges[3]: [],
+            ranges[4]: []
+        }
+}
+
+# SORTING RANDOM ARRAY
 for range_ in range(len(ranges)):
     for sample_ in range(len(samples)):
         arr = createArray(samples[sample_], 0, ranges[range_])
-       # print("{} :".format(samples[sample_]))
         for algo in Algos:
+            print(algo.name)
             arr_copy = arr.copy()
             t0 = time.time()
             if algo != Algos.radixSort:
                 sort(algo, samples[sample_], arr_copy)
             else:
                 arr_copy = radix(arr_copy, __get_num_digits(arr_copy))
-           # print("sorted by: {}  : {}".format(algo.name, arr_copy[3:-3]))
             t1 = time.time()
             tot_time = t1 - t0
             times[algo.name][ranges[range_]].append(tot_time)
-            #print("{}: {}".format(str(algo.name), times[str(algo.name)][sample_]))
+            print("range: {} sample: {} - {}".format(ranges[range_], samples[sample_], tot_time))
 
-print(times)
-
-# for i in range(len(samples)):
-#     arr = createArrayDesc(samples[i])
-#     print("{} :".format(samples[i]))
-#     for algo in Algos:
-#         arr_copy = arr.copy()
-#         t0 = time.time()
-#         if algo != Algos.radixSort:
-#             sort(algo, samples[i], arr_copy)
-#         else:
-#             arr_copy = radix(arr_copy, __get_num_digits(arr_copy))
-#        # print("sorted by: {}  : {}".format(algo.name, arr_copy[3:-3]))
-#         t1 = time.time()
-#         tot_time = t1 - t0
-#         times[str(algo.name)].append(tot_time)
-#         print("DESC {}: {}".format(str(algo.name), times[str(algo.name)][i]))
+save_file("outRANDOMTEST", times)
 
 
-# array = createArray(1000, 0, 1000)
-# array2 = np.array([0 for _ in range(100000)])
-# print(array2)
-# quickSort(array2, 0, 100000 - 1)
-# print(array2)
+#  SORTING HALF RANDOM ARRAY
+# for range_ in range(len(ranges)):
+#     for sample_ in range(len(samples)):
+#         arr1 = createArray(samples[sample_] - 7000, 0, ranges[range_])
+#         arr2 = createArrayDesc(7000)
+#         arr = np.concatenate([arr1, arr2])
+#         for algo in Algos:
+#             print(algo.name)
+#             arr_copy = arr.copy()
+#             t0 = time.time()
+#             if algo != Algos.radixSort:
+#                 sort(algo, samples[sample_], arr_copy)
+#             else:
+#                 arr_copy = radix(arr_copy, __get_num_digits(arr_copy))
+#             t1 = time.time()
+#             tot_time = t1 - t0
+#             timesHR[algo.name][ranges[range_]].append(tot_time)
+#             print("range: {} sample: {} - {}".format(ranges[range_], samples[sample_], tot_time))
+#
+# save_file("outHALFRANDOM", timesHR)
+
+#  SORTING  4 HALF RANDOM ARRAY
+# for range_ in range(len(ranges)):
+#     for sample_ in range(len(samples)):
+#         arr1 = createArray(samples[sample_] // 2 - 3500, 0, ranges[range_])
+#         arr2 = createArrayDesc(3500)
+#         arr3 = createArray(samples[sample_] // 2 - 3500, 0, ranges[range_])
+#         arr4 = createArrayDesc(3500)
+#
+#         arr = np.concatenate([arr1, arr2, arr3, arr4])
+#         for algo in Algos:
+#             print(algo.name)
+#             arr_copy = arr.copy()
+#             t0 = time.time()
+#             if algo != Algos.radixSort:
+#                 sort(algo, samples[sample_], arr_copy)
+#             else:
+#                 arr_copy = radix(arr_copy, __get_num_digits(arr_copy))
+#             t1 = time.time()
+#             tot_time = t1 - t0
+#             times4R[algo.name][ranges[range_]].append(tot_time)
+#             print("range: {} sample: {} - {}".format(ranges[range_], samples[sample_], tot_time))
+#
+# save_file("testSAVE", times4R)
